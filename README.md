@@ -1,8 +1,7 @@
-<h1> align="center" 
+<h1 align="center">
     Intents Classification for Neural Text Generation 
     <br/>
 </h1>
-ENSAE Natural Language Processing project
 
 <p align="center">The project consists of building an intent classifier. Several benchmark have been released involving english [1] or multlingual setting [2] <br/> </p>
 

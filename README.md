@@ -6,6 +6,10 @@
 <p align="center">The project consists of building an intent classifier. Several benchmark have been released involving 
 english [1] or multlingual setting [2] <br/> </p>
 
+<p align="center">
+    <img alt="Licence" src="https://img.shields.io/bower/l/MI?style=for-the-badge"> <img alt="Repo size" src="https://img.shields.io/github/repo-size/konkinit/intent_classification?style=for-the-badge">
+</p>
+
 ## General Context
 
 The identification of both Dialog Acts (DA) and Emotion/Sentiment (E/S) in spoken language is an important step toward

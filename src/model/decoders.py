@@ -1,9 +1,8 @@
-from numpy import nan
 import tensorflow as tf
 
 
 class MLP:
-    def __init__(self, 
+    def __init__(self,
                  n_units: int,
                  n_layers: int,
                  f_dropout: float) -> None:

@@ -4,7 +4,7 @@ from transformers import BertTokenizer, BertModel
 
 
 class BERTenocder:
-    def __init__(self, 
+    def __init__(self,
                  model_name: str,
                  texts: List[str]) -> None:
         self.model = BertModel.from_pretrained(model_name)
@@ -18,5 +18,3 @@ class BERTenocder:
         with torch.no_grad():
             last_hidden_states = self.model(inputs_ids)[0]
         return last_hidden_states.mean(axis=1)
-
-    

@@ -1,11 +1,20 @@
+import os
+import sys
 from numpy import ndarray, array
-from pandas import DataFrame
+from pandas import DataFrame, read_csv
 from typing import Tuple
 
 
-class BERTdata:
-    def __init__(self, df_: DataFrame, T_: int) -> None:
-        self.df = df_
+os.chdir(os.getcwd())
+
+class StackedFormat:
+    def __init__(self,
+                 name: str,
+                 split: str,
+                 T_: int) -> None:
+        self.df = read_csv(f"./inputs_data/data_{name}_{split}.csv",
+                            encoding="utf-8",
+                            sep="|")
         self.T = T_
 
     def get_context_nUtterances(self) -> DataFrame:

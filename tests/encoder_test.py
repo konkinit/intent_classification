@@ -4,7 +4,7 @@ import pytest
 from torch import Size
 if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
-from src.model.encoders import BERTenocder
+from src.models.encoders import BERTenocder
 
 
 @pytest.mark.parametrize("text, embedding_shape",

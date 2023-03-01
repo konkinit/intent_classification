@@ -22,7 +22,7 @@ problem, i.e., having an automatic dialog system generate an unspecific response
 number of user utterances. DAs and emotions are identified through sequence labeling systems that are trained in a
 supervised manner DAs and emot0ions have been particularly useful for training ChatGPT.
 
-## Problem Statement:
+## Problem Statement
 
 We start by formally defining the Sequence Labelling Problem. At the highest level, we have a set $D$ of conversations
 composed of utterances, i.e., $D = (C_1,C_2,\dots,C_{|D|})$ with $Y= (Y_1,Y_2,\dots,Y_{|D|})$ being the corresponding
@@ -43,7 +43,8 @@ The goal is to predict Y from D !
 | Yeah                                                                                | backchanel            |
 | It can be a pain .                                                                  | Declarative datetemnt |
 
-## References: 
+## References:
+
 See the folder `/papers`
 
 [1] Emile Chapuis,Pierre Colombo, Matthieu Labeau, and Chloé Clavel. Code-switched inspired losses for generic spoken

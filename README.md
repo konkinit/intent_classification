@@ -7,7 +7,7 @@
 english or multlingual setting <br/> </p>
 
 <p align="center">
-    <img alt="Test & Lint" src="https://img.shields.io/github/actions/workflow/status/konkinit/intent_classification/test_lint.yaml?label=Test%20and%20Lint&style=for-the-badge">
+    <img alt="Test & Lint" src="https://img.shields.io/github/actions/workflow/status/konkinit/intent_classification/test_lint.yaml?label=Lint%20and%20TEST&style=for-the-badge">
 </p>
 
 <p align="center">

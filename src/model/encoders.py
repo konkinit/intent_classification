@@ -6,7 +6,7 @@ from transformers import BertTokenizer, BertModel
 class BERTenocder:
     def __init__(self,
                  model_name: str,
-                 texts: List[str]) -> None:
+                 texts: str) -> None:
         self.model = BertModel.from_pretrained(model_name)
         self.tokenizer = BertTokenizer.from_pretrained(model_name)
         self.inputs = texts

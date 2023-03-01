@@ -7,6 +7,10 @@
 english or multlingual setting <br/> </p>
 
 <p align="center">
+    <img alt="Test & Lint" src="https://img.shields.io/github/actions/workflow/status/konkinit/intent_classification/test_lint.yaml?label=Test%20and%20Lint&style=for-the-badge">
+</p>
+
+<p align="center">
     <img alt="Licence" src="https://img.shields.io/bower/l/MI?style=for-the-badge"> <img alt="Repo size" src="https://img.shields.io/github/repo-size/konkinit/intent_classification?style=for-the-badge">
 </p>
 
@@ -22,8 +26,8 @@ supervised manner DAs and emot0ions have been particularly useful for training C
 
 We start by formally defining the Sequence Labelling Problem. At the highest level, we have a set $D$ of conversations
 composed of utterances, i.e., $D = (C_1,C_2,\dots,C_{|D|})$ with $Y= (Y_1,Y_2,\dots,Y_{|D|})$ being the corresponding
-set of labels (e.g., DA,E/S). At a lower level each conversation $C_i$ is composed of utterances $u$, 
-i.e $C_i = (u_1, u_2, \dots, u_{|C_i|})$ with $Y_i = (y_1, y_2, \dots, y_{|C_i|})$ being the corresponding sequence of 
+set of labels (e.g., DA,E/S). At a lower level each conversation $C_i$ is composed of utterances $u$, i.e 
+$C_i = (u_1, u_2, \dots, u_{|C_i|})$ with $Y_i = (y_1, y_2, \dots, y_{|C_i|})$ being the corresponding sequence of 
 labels: each $u_i$ is associated with a unique label $y_i$. At the lowest level, each utterance $u_i$ can be seen as a 
 sequence of words, i.e $u_i = (\omega^i_1, \omega^i_2, \dots, \omega^i_{|u_i|})$.
 

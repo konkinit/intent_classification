@@ -4,7 +4,7 @@
 </h1>
 
 <p align="center">The project consists of building an intent classifier. Several benchmark have been released involving 
-english [1] or multlingual setting [2] <br/> </p>
+english or multlingual setting <br/> </p>
 
 <p align="center">
     <img alt="Licence" src="https://img.shields.io/bower/l/MI?style=for-the-badge"> <img alt="Repo size" src="https://img.shields.io/github/repo-size/konkinit/intent_classification?style=for-the-badge">
@@ -22,10 +22,10 @@ supervised manner DAs and emot0ions have been particularly useful for training C
 
 We start by formally defining the Sequence Labelling Problem. At the highest level, we have a set $D$ of conversations
 composed of utterances, i.e., $D = (C_1,C_2,\dots,C_{|D|})$ with $Y= (Y_1,Y_2,\dots,Y_{|D|})$ being the corresponding
-set of labels (e.g., DA,E/S). At a lower level each conversation $C_i$ is composed of utterances $u$, i.e $ C_i = (
-u_1, u_2, \dots, u_{|C_i|})$ with $Y_i = (y_1, y_2, \dots, y_{|C_i|})$ being the corresponding sequence of labels: each
-$u_i$ is associated with a unique label $y_i$. At the lowest level, each utterance $u_i$ can be seen as a sequence of
-words, i.e $u_i = (\omega^i_1, \omega^i_2, \dots, \omega^i_{|u_i|})$.
+set of labels (e.g., DA,E/S). At a lower level each conversation $C_i$ is composed of utterances $u$, 
+i.e $C_i = (u_1, u_2, \dots, u_{|C_i|})$ with $Y_i = (y_1, y_2, \dots, y_{|C_i|})$ being the corresponding sequence of 
+labels: each $u_i$ is associated with a unique label $y_i$. At the lowest level, each utterance $u_i$ can be seen as a 
+sequence of words, i.e $u_i = (\omega^i_1, \omega^i_2, \dots, \omega^i_{|u_i|})$.
 
 The goal is to predict Y from D !
 
@@ -39,7 +39,8 @@ The goal is to predict Y from D !
 | Yeah                                                                                | backchanel            |
 | It can be a pain .                                                                  | Declarative datetemnt |
 
-## References:
+## References: 
+See the folder `/papers`
 
 [1] Emile Chapuis,Pierre Colombo, Matthieu Labeau, and Chloé Clavel. Code-switched inspired losses for generic spoken
 dialog representations. EMNLP 2021

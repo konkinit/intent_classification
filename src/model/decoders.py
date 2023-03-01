@@ -1,17 +1,24 @@
 from numpy import nan
-from tensorflow import keras 
+import tensorflow as tf
 
 
-class MLP(keras.Sequential):
+class MLP:
     def __init__(self, 
                  n_units: int,
-                 n_layers: int) -> None:
-        super().__init__()
+                 n_layers: int,
+                 f_dropout: float) -> None:
+        self.model = tf.keras.models.Sequential()
         self.nUnints = n_units
         self.nLayers = n_layers
+        self.fDroupout = f_dropout
 
     def __build__(self):
         for _ in range(self.nLayers):
-            self.add(keras.layers.Dense(self.nUnints,
+            self.model.add(tf.keras.layers.Dense(
+                                        self.nUnints,
                                         activation="relu"))
-        self.add(keras.layers.Dropout(0.2))
+        self.model.add(tf.keras.layers.Dropout(self.fDropout))
+
+    def __compile__(self):
+        optimizer = tf.keras.optimizers.SGD(clipvalue=1.0)
+        self.model.compile(loss="mse", optimizer=optimizer)

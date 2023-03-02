@@ -1,11 +1,12 @@
 import os
-import sys
-from numpy import ndarray, array
+from numpy import ndarray
 from pandas import DataFrame, read_csv
 from typing import Tuple
+from torch import Tensor
 
 
 os.chdir(os.getcwd())
+
 
 class StackedFormat:
     def __init__(self,
@@ -13,8 +14,8 @@ class StackedFormat:
                  split: str,
                  T_: int) -> None:
         self.df = read_csv(f"./inputs_data/data_{name}_{split}.csv",
-                            encoding="utf-8",
-                            sep="|")
+                           encoding="utf-8",
+                           sep="|")
         self.T = T_
 
     def get_context_nUtterances(self) -> DataFrame:
@@ -24,8 +25,8 @@ class StackedFormat:
                          .reset_index()
                          .sort_values(by="Label")
                          .reset_index(drop=True))
-        return self.df[self.df["Dialogue_ID"].isin(
-                df_label_freq[df_label_freq["Label"] == self.T]["Dialogue_ID"].to_list())]
+        return (self.df[self.df["Dialogue_ID"]
+                        .isin(df_label_freq[df_label_freq["Label"] == self.T]["Dialogue_ID"].to_list())])
 
     def get_contexts_labels(self) -> Tuple[list, ndarray]:
         return ((self.get_context_nUtterances()
@@ -34,7 +35,7 @@ class StackedFormat:
                  .to_frame()
                  .reset_index()
                  .apply(lambda x: " ".join(x.Utterance), axis=1)
-                 .to_list()), array(self.get_context_nUtterances()
+                 .to_list()), Tensor(self.get_context_nUtterances()
                                     .groupby("Dialogue_ID")["Label"]
                                     .apply(list)
                                     .to_list()))

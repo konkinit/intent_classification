@@ -33,8 +33,10 @@ class BERTenocder:
                                   truncation=True,
                                   return_tensors='pt')
         with no_grad():
-            model_output = model(**encoded_input)
-        return normalize(self.mean_pooling(model_output,
-                                           encoded_input['attention_mask']),
-                         p=2,
-                         dim=1)
+            model_uotput = model(**encoded_input)
+        texts_embedded = normalize(
+            self.mean_pooling(model_uotput, encoded_input['attention_mask']),
+            p=2, dim=1)
+        def _reshape_(x: Tensor): return x.reshape(x.shape[0], 1, x.shape[1])
+        texts_embedded = _reshape_(texts_embedded)
+        return texts_embedded

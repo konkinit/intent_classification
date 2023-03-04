@@ -31,7 +31,7 @@ $C_i = (u_1, u_2, \dots, u_{|C_i|})$ with $Y_i = (y_1, y_2, \dots, y_{|C_i|})$ b
 labels: each $u_i$ is associated with a unique label $y_i$. At the lowest level, each utterance $u_i$ can be seen as a 
 sequence of words, i.e $u_i = (\omega^i_1, \omega^i_2, \dots, \omega^i_{|u_i|})$.
 
-The goal is to predict Y from D !
+The goal is to predict $Y$ from $D$ !
 
 ## Examples
 

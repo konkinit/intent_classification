@@ -1,16 +1,14 @@
 from typing import List
 from torch import no_grad, Tensor, sum, clamp
 from torch.nn.functional import normalize
-from transformers import BertTokenizer, BertModel
+from transformers import BertModel, BertTokenizer
 
 
-class BERTenocder:
+class BERTencoder:
     def __init__(self,
-                 model_name: str,
-                 max_length: int) -> None:
+                 model_name: str) -> None:
         self.model = BertModel.from_pretrained(model_name)
         self.tokenizer = BertTokenizer.from_pretrained(model_name)
-        self.maxLength = max_length
 
     @staticmethod
     def mean_pooling(model_output, attention_mask):
@@ -22,21 +20,12 @@ class BERTenocder:
                                .unsqueeze(-1)
                                .expand(token_embeddings.size())
                                .float())
-        return (sum(token_embeddings * input_mask_expanded, 1)
-                / clamp(input_mask_expanded.sum(1), min=1e-9))
+        return sum(token_embeddings * input_mask_expanded, 1) / clamp(input_mask_expanded.sum(1), min=1e-9)
 
     def embedding(self, texts: List[str]) -> Tensor:
-        tokenizer = BertTokenizer.from_pretrained(self.model)
-        model = BertModel.from_pretrained(self.model)
-        encoded_input = tokenizer(texts,
-                                  padding=True,
-                                  truncation=True,
-                                  return_tensors='pt')
+        encoded_input = self.tokenizer(texts, padding=True, truncation=True, return_tensors='pt')
         with no_grad():
-            model_uotput = model(**encoded_input)
-        texts_embedded = normalize(
-            self.mean_pooling(model_uotput, encoded_input['attention_mask']),
-            p=2, dim=1)
+            model_output = self.model(**encoded_input)
+        texts_embedded = normalize(self.mean_pooling(model_output, encoded_input['attention_mask']), p=2, dim=1)
         def _reshape_(x: Tensor): return x.reshape(x.shape[0], 1, x.shape[1])
-        texts_embedded = _reshape_(texts_embedded)
-        return texts_embedded
+        return _reshape_(texts_embedded)

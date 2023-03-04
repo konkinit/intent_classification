@@ -1,5 +1,4 @@
 import os
-from numpy import ndarray
 from pandas import DataFrame, read_csv
 from typing import Tuple, List
 from torch import Tensor
@@ -12,22 +11,22 @@ _split_ = ["train", "validation", "test"]
 class StackedFormat:
     def __init__(self,
                  dataset_name: str,
-                 T_: int) -> None:
+                 T: int) -> None:
         self.df = list([read_csv(f"./inputs_data/data_{dataset_name}_{split}.csv",
-                           encoding="utf-8",
-                           sep="|") for split in _split_])
-        self.T = T_
+                                 encoding="utf-8",
+                                 sep="|") for split in _split_])
+        self.T = T
 
     def get_context_nUtterances(self) -> DataFrame:
         def context_nUtterances_split_level(df: DataFrame):
             df_label_freq = (df[["Dialogue_ID", "Label"]]
-                            .groupby("Dialogue_ID")
-                            .count()
-                            .reset_index()
-                            .sort_values(by="Label")
-                            .reset_index(drop=True))
+                             .groupby("Dialogue_ID")
+                             .count()
+                             .reset_index()
+                             .sort_values(by="Label")
+                             .reset_index(drop=True))
             return (df[df["Dialogue_ID"]
-                            .isin(df_label_freq[df_label_freq["Label"] == self.T]["Dialogue_ID"].to_list())])
+                       .isin(df_label_freq[df_label_freq["Label"] == self.T]["Dialogue_ID"].to_list())])
         return list([context_nUtterances_split_level(self.df[i]) for i in range(len(self.df))])
 
     def get_contexts_labels(self) -> Tuple[List[List[str]], List[Tensor]]:

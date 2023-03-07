@@ -1,7 +1,9 @@
 import os
+from numpy import array, hstack
 from pandas import DataFrame, read_csv
 from typing import Tuple, List
 from torch import Tensor
+import tensorflow as tf
 
 
 os.chdir(os.getcwd())
@@ -29,21 +31,25 @@ class StackedFormat:
                        .isin(df_label_freq[df_label_freq["Label"] == self.T]["Dialogue_ID"].to_list())])
         return list([context_nUtterances_split_level(self.df[i]) for i in range(len(self.df))])
 
-    def get_contexts_labels(self) -> Tuple[List[List[str]], List[Tensor]]:
+    def get_contexts_labels(self) -> Tuple[int, List[List[str]], List[tf.Tensor]]:
         """
         Return the contexts and dialog act in a stacked format
         """
-        def contexts_labels_split_level(df: DataFrame) -> Tuple[List[str], Tensor]:
+        def contexts_labels_split_level(df_: DataFrame) -> Tuple[List[str], Tensor]:
+            df = df_.copy()
+            dim_act = df.Label.unique()
+            df["LabelVector"] = df["Label"].apply(lambda x: array([int(x == _) for _ in dim_act]))
             return ((df.groupby("Dialogue_ID")["Utterance"]
                      .apply(list)
                      .to_frame()
                      .reset_index()
                      .apply(lambda x: " ".join(x.Utterance), axis=1)
-                     .to_list()), Tensor(df.groupby("Dialogue_ID")["Label"]
-                                         .apply(list)
-                                         .to_list()))
+                     .to_list()), tf.constant(array(df.groupby("Dialogue_ID")["LabelVector"]
+                                                    .apply(lambda x: list(hstack(x)))
+                                                    .to_list(), dtype="int32")))
         contexts, labels = list([]), list([])
         for df in self.get_context_nUtterances():
             contexts.append(contexts_labels_split_level(df)[0])
             labels.append(contexts_labels_split_level(df)[1])
-        return contexts, labels
+            dim_act = len(df["Label"].unique())
+        return dim_act, contexts, labels

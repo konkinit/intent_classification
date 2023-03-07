@@ -1,5 +1,6 @@
 from typing import List
-from torch import no_grad, Tensor, sum, clamp
+import tensorflow as tf
+from torch import no_grad, sum, clamp
 from torch.nn.functional import normalize
 from transformers import BertModel, BertTokenizer
 
@@ -22,10 +23,9 @@ class BERTencoder:
                                .float())
         return sum(token_embeddings * input_mask_expanded, 1) / clamp(input_mask_expanded.sum(1), min=1e-9)
 
-    def embedding(self, texts: List[str]) -> Tensor:
+    def embedding(self, texts: List[str]) -> tf.Tensor:
         encoded_input = self.tokenizer(texts, padding=True, truncation=True, return_tensors='pt')
         with no_grad():
             model_output = self.model(**encoded_input)
         texts_embedded = normalize(self.mean_pooling(model_output, encoded_input['attention_mask']), p=2, dim=1)
-        def _reshape_(x: Tensor): return x.reshape(x.shape[0], 1, x.shape[1])
-        return _reshape_(texts_embedded)
+        return tf.convert_to_tensor(texts_embedded.numpy())

@@ -43,9 +43,9 @@ The goal is to predict $Y$ from $D$ !
 | Yeah                                                                                | backchanel            |
 | It can be a pain .                                                                  | Declarative datetemnt |
 
-## References:
+## References
 
-See the folder `/papers`
+See the directory `/papers`
 
 [1] Emile Chapuis,Pierre Colombo, Matthieu Labeau, and Chloé Clavel. Code-switched inspired losses for generic spoken
 dialog representations. EMNLP 2021

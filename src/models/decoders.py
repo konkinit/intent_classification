@@ -43,3 +43,8 @@ class MLP:
         yhat = decoding_pred(labelsHat.reshape(labelsHat.shape[0], self.outputDim[1], self.outputDim[0]))
         y = array(labels[2]).reshape(labelsHat.shape[0], self.outputDim[1], self.outputDim[0])
         return mean([int(array_equal(y[i], yhat[i])) for i in range(y.shape[0])])
+    
+
+class GRU:
+    def __init__(self) -> None:
+        pass

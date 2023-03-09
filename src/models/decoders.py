@@ -43,21 +43,13 @@ class MLP:
         yhat = decoding_pred(labelsHat.reshape(labelsHat.shape[0], self.outputDim[1], self.outputDim[0]))
         y = array(labels[2]).reshape(labelsHat.shape[0], self.outputDim[1], self.outputDim[0])
         return mean([int(array_equal(y[i], yhat[i])) for i in range(y.shape[0])])
-    
+
 
 class GRU:
     def __init__(self) -> None:
         pass
-    
+
     def evaluation(self,
                    embeddings: List[tf.Tensor],
                    labels: List[tf.Tensor]) -> float:
-        inputs = tf.random.normal([32, 10, 8])
-        gru = tf.keras.layers.GRU(4)
-        output = gru(inputs)
-        print(output.shape)
-
-        gru = tf.keras.layers.GRU(4, return_sequences=True, return_state=True)
-        whole_sequence_output, final_state = gru(inputs)
-        print(whole_sequence_output.shape)
-        print(final_state.shape)
+        pass

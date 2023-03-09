@@ -12,9 +12,9 @@ _split_ = ["train", "validation", "test"]
 
 class Format:
     def __init__(self,
-                dataset_name: str,
-                T: int,
-                type_format: str) -> None:
+                 dataset_name: str,
+                 T: int,
+                 type_format: str) -> None:
         self.df = list([read_csv(f"./inputs_data/data_{dataset_name}_{split}.csv",
                                     encoding="utf-8",
                                     sep="|") for split in _split_])
@@ -40,13 +40,14 @@ class Format:
                              .reset_index(drop=True))
             return (df[df["Dialogue_ID"]
                        .isin(df_label_freq[df_label_freq["Label"] >= self.T]["Dialogue_ID"].to_list())])
-        
+
         def context_nUtterances_split_level(df: DataFrame) -> DataFrame:
             grouped_index = (context_min_nUtterances_split_level(df)
                              .groupby('Dialogue_ID', as_index = False)
                              .apply(lambda x: x.reset_index(drop = True))
                              .reset_index())
-            return grouped_index[grouped_index.level_1 <= self.T-1][["Utterance", "Dialogue_ID", "Label"]].reset_index(drop=True)
+            return (grouped_index[grouped_index.level_1 <= self.T-1][["Utterance", "Dialogue_ID", "Label"]]
+                    .reset_index(drop=True))
         
         return list([context_nUtterances_split_level(self.df[i]) for i in range(len(self.df))])
 
@@ -65,8 +66,8 @@ class Format:
                         .reset_index()
                         .apply(lambda x: " ".join(x.Utterance), axis=1)
                         .to_list()), tf.constant(array(df.groupby("Dialogue_ID")["LabelVector"]
-                                                        .apply(lambda x: list(hstack(x)))
-                                                        .to_list(), dtype="int32")))
+                                                       .apply(lambda x: list(hstack(x)))
+                                                       .to_list(), dtype="int32")))
             else:
                 return ((df["Utterance"].to_list()), tf.constant(array(df["LabelVector"].to_list(), dtype="int32")))
 

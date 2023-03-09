@@ -30,11 +30,11 @@ class BERTencoder:
             with no_grad():
                 model_output = self.model(**encoded_input)
             return normalize(self.mean_pooling(model_output, encoded_input['attention_mask']), p=2, dim=1)
-        
+
         texts_embedded = vstack([item_embedding(texts) for texts in list_texts])
         return tf.convert_to_tensor(texts_embedded)
-    
 
-class HTEncoder:
+
+class HierarchicalTransformersEncoder:
     def __init__(self) -> None:
         pass

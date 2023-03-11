@@ -18,7 +18,7 @@ def getDataHF(_url_: str):
 
 def getDataTF(dataset: str, split_: str) -> None:
     data_str = f'huggingface:silicone/{dataset}'
-    if os.path.exists(os.path.join(os.getcwd(), f"inputs_data/data_{dataset}_{split}.csv")):
+    if os.path.exists(os.path.join(os.getcwd(), f"./inputs_data/data_{dataset}_{split}.csv")):
         pass
     else:
         (tfds.as_dataframe(tfds.load(data_str, split=split_))[["Idx", "Utterance", "Dialogue_ID", "Label"]]
@@ -34,7 +34,8 @@ def getDataTF(dataset: str, split_: str) -> None:
 
 _split_ = ["train", "validation", "test"]
 _datasets_da_ = ["swda", "dyda_da", "mrda"]
+_datasets_es_ = ["meld_e", "dyda_e", "meld_s", "sem"]
 
-for dataset in _datasets_da_:
+for dataset in _datasets_es_:
     for split in _split_:
         getDataTF(dataset, split)

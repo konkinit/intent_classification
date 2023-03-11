@@ -14,6 +14,7 @@ of conversations <br/> </p>
     <img alt="Licence" src="https://img.shields.io/bower/l/MI?style=for-the-badge"> <img alt="Repo size" src="https://img.shields.io/github/repo-size/konkinit/intent_classification?style=for-the-badge">
 </p>
 
+
 ## Getting Started
 
 1. Clone the repository
@@ -27,8 +28,9 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-3. Run the notebook `./notebooks/experimental_results.ipynb` 
+3. Run the script `./src/utilis/get_datasets.py` to download these datasets
 
+4. Run the notebook `./notebooks/experimental_results.ipynb`
 
 
 ## References

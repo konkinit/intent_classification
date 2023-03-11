@@ -1,31 +1,35 @@
+import sys
+import os
 from typing import List
 import tensorflow as tf
 from numpy import vstack
-from torch import no_grad, sum, clamp
+from tqdm import tqdm
+from torch import no_grad
 from torch.nn.functional import normalize
-from transformers import BertModel, BertTokenizer
+from transformers import (
+        BertModel,
+        BertTokenizer,
+        XLNetModel,
+        XLNetTokenizer)
+if os.getcwd() not in sys.path:
+    sys.path.append(os.getcwd())
+from src.utilis.models_utilis import (
+    mean_pooling)
+
+_dict = {
+            "bert": [BertModel, BertTokenizer],
+            "xlnet": [XLNetModel, XLNetTokenizer]
+        }
 
 
-class BERTencoder:
+class TransformersEncoder:
     def __init__(self,
                  model_name: str) -> None:
-        self.model = BertModel.from_pretrained(model_name)
-        self.tokenizer = BertTokenizer.from_pretrained(model_name)
-
-    @staticmethod
-    def mean_pooling(model_output, attention_mask):
-        """
-        Mean Pooling - Take attention mask into account for correct averaging
-        """
-        token_embeddings = model_output[0]
-        input_mask_expanded = (attention_mask
-                               .unsqueeze(-1)
-                               .expand(token_embeddings.size())
-                               .float())
-        return sum(token_embeddings * input_mask_expanded, 1) / clamp(input_mask_expanded.sum(1), min=1e-9)
+        _transformer = model_name.split('-')[0]
+        self.model = _dict[_transformer][0].from_pretrained(model_name)
+        self.tokenizer = _dict[_transformer][1].from_pretrained(model_name)
 
     def batch_embedding(self, list_texts: List[str]) -> tf.Tensor:
-        
         def item_embedding(texts):
             encoded_input = self.tokenizer(texts,
                                            padding=True,
@@ -33,12 +37,13 @@ class BERTencoder:
                                            return_tensors='pt')
             with no_grad():
                 model_output = self.model(**encoded_input)
-            return normalize(self.mean_pooling(model_output,
-                                               encoded_input['attention_mask']),
+            return normalize(mean_pooling(model_output,
+                                          encoded_input['attention_mask']),
                              p=2, dim=1)
-        texts_embedded = vstack([item_embedding(texts)
-                                 for texts in list_texts])
-        return tf.convert_to_tensor(texts_embedded)
+        texts_embedded = list([])
+        for texts in tqdm(list_texts):
+            texts_embedded.append(item_embedding(texts))
+        return tf.convert_to_tensor(vstack(texts_embedded))
 
 
 class HierarchicalTransformersEncoder:

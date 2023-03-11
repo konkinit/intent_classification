@@ -36,6 +36,7 @@ _split_ = ["train", "validation", "test"]
 _datasets_da_ = ["swda", "dyda_da", "mrda"]
 _datasets_es_ = ["meld_e", "dyda_e", "meld_s", "sem"]
 
+
 for dataset in _datasets_es_:
     for split in _split_:
         getDataTF(dataset, split)

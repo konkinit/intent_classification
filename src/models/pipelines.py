@@ -4,8 +4,14 @@ from pandas import DataFrame
 if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
 from src.data.processing_data import Format
-from src.models.encoders import BERTencoder
-from src.models.decoders import MLP
+from src.models.encoders import TransformersEncoder
+from src.models.decoders import MLP, SequentialGRU
+
+
+_dict_decoder = {
+                    "MLP": MLP,
+                    "GRU": SequentialGRU
+                }
 
 
 class Pipeline:
@@ -31,18 +37,19 @@ class Pipeline:
         Execute the encode-decode strategy on a dataset
         and Summarize the report in a dataframe
         """
-        dimDialogAct, contexts, labels = (Format(self.dataset_name,
-                                                 self.T,
-                                                 self.data_format_type)
-                                          .get_contexts_labels())
-        embeddings = list([(BERTencoder(self.encoder_name)
+        dimLabelSet, contexts, labels = (Format(self.dataset_name,
+                                                self.T,
+                                                self.data_format_type)
+                                         .get_contexts_labels())
+        embeddings = list([(TransformersEncoder(self.encoder_name)
                             .batch_embedding(contexts[i]))
                            for i in range(len(contexts))])
-        self.performance = (MLP(embeddings[0].shape[1],
+        self.performance = (_dict_decoder[self.decoder_name](
+                                embeddings[0].shape[1],
                                 self.nLayers,
-                                [dimDialogAct, self.T],
-                                self.fDropout)
-                            .evaluate(embeddings, labels))
+                                [dimLabelSet, self.T],
+                                self.fDropout).evaluate(
+                                    embeddings, labels))
         df_report = DataFrame(data=[[self.dataset_name,
                                      self.encoder_name,
                                      self.decoder_name,

@@ -28,7 +28,7 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-3. Run the script `./src/utilis/get_datasets.py` to download these datasets
+3. Run the script `./src/utilis/get_datasets.py` to download the [SILICONE datasets](https://huggingface.co/datasets/silicone)
 
 4. Run the notebook `./notebooks/experimental_results.ipynb`
 

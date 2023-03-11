@@ -25,13 +25,19 @@ class BERTencoder:
         return sum(token_embeddings * input_mask_expanded, 1) / clamp(input_mask_expanded.sum(1), min=1e-9)
 
     def batch_embedding(self, list_texts: List[str]) -> tf.Tensor:
+        
         def item_embedding(texts):
-            encoded_input = self.tokenizer(texts, padding=True, truncation=True, return_tensors='pt')
+            encoded_input = self.tokenizer(texts,
+                                           padding=True,
+                                           truncation=True,
+                                           return_tensors='pt')
             with no_grad():
                 model_output = self.model(**encoded_input)
-            return normalize(self.mean_pooling(model_output, encoded_input['attention_mask']), p=2, dim=1)
-
-        texts_embedded = vstack([item_embedding(texts) for texts in list_texts])
+            return normalize(self.mean_pooling(model_output,
+                                               encoded_input['attention_mask']),
+                             p=2, dim=1)
+        texts_embedded = vstack([item_embedding(texts)
+                                 for texts in list_texts])
         return tf.convert_to_tensor(texts_embedded)
 
 

@@ -58,8 +58,8 @@ class Format:
         def contexts_labels_split_level(df_: DataFrame) -> Tuple[List[str], Tensor]:
             df = df_.copy()
             set_dialogue_act = self.get_dialogue_acts()
-            df["LabelVector"] = df["Label"].apply(lambda x: array([int(x == label) for label in set_dialogue_act]))
             if self.type_format == "stacked":
+                df["LabelVector"] = df["Label"].apply(lambda x: array([int(x == label) for label in set_dialogue_act]))
                 return ((df.groupby("Dialogue_ID")["Utterance"]
                         .apply(list)
                         .to_frame()
@@ -69,6 +69,7 @@ class Format:
                                                        .apply(lambda x: list(hstack(x)))
                                                        .to_list(), dtype="int32")))
             else:
+                df["LabelVector"] = df["Label"].apply(lambda x: array([int(x == label) for label in set_dialogue_act]))
                 return ((df["Utterance"].to_list()), tf.constant(array(df["LabelVector"].to_list(), dtype="int32")))
 
         contexts, labels = list([]), list([])
@@ -77,3 +78,6 @@ class Format:
             labels.append(contexts_labels_split_level(df)[1])
             len_dialogue_act = len(self.get_dialogue_acts())
         return len_dialogue_act, contexts, labels
+
+# tf.constant(array(df.groupby("Dialogue_ID")["LabelVector"]
+#                                                       .apply(list).to_list(), dtype="int32")))

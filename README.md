@@ -11,8 +11,11 @@ of conversations <br/> </p>
 </p>
 
 <p align="center">
-    <img alt="Licence" src="https://img.shields.io/bower/l/MI?style=for-the-badge"> <img alt="Repo size" src="https://img.shields.io/github/repo-size/konkinit/intent_classification?style=for-the-badge"> <img src="Python 3.10" src="https://img.shields.io/badge/Python-3.10-cyan>
+    <img alt="Licence" src="https://img.shields.io/bower/l/MI?style=for-the-badge"> <img alt="Repo size" src="https://img.shields.io/github/repo-size/konkinit/intent_classification?style=for-the-badge"> <a href="https://www.python.org/downloads/release/python-3100/" 
+target="_blank"><img src="https://img.shields.io/badge/python-3.10-blue.svg?style=for-the-badge" alt="Python Version" /></a>
 </p>
+
+
 
 
 ## Getting Started

@@ -21,15 +21,13 @@ class Pipeline:
                  T: int,
                  encoder_name: str,
                  decoder_name: str,
-                 n_layers: int,
-                 f_dropout: float) -> None:
+                 *args) -> None:
         self.dataset_name = dataset_name
         self.data_format_type = data_format_type
         self.T = T
         self.encoder_name = encoder_name
         self.decoder_name = decoder_name
-        self.nLayers = n_layers
-        self.fDropout = f_dropout
+        self.args = args if len(args) > 0 else [0, 0]
         self.performance = 1.0
 
     def summary_exec(self) -> DataFrame:
@@ -41,15 +39,22 @@ class Pipeline:
                                                 self.T,
                                                 self.data_format_type)
                                          .get_contexts_labels())
-        embeddings = list([(TransformersEncoder(self.encoder_name)
+        embeddings = list([(TransformersEncoder(self.encoder_name,
+                                                self.data_format_type,
+                                                self.T)
                             .batch_embedding(contexts[i]))
                            for i in range(len(contexts))])
-        self.performance = (_dict_decoder[self.decoder_name](
-                                embeddings[0].shape[1],
-                                self.nLayers,
+        if self.data_format_type == "stacked":
+            embeddingsDim = embeddings[0].shape[1]
+        else:
+            embeddingsDim = embeddings[0].shape[2]
+        self.performance = _dict_decoder[self.decoder_name](
+                                embeddingsDim,
                                 [dimLabelSet, self.T],
-                                self.fDropout).evaluate(
-                                    embeddings, labels))
+                                self.args[0],
+                                self.args[1]
+                                )._inference(
+                                    embeddings, labels)
         df_report = DataFrame(data=[[self.dataset_name,
                                      self.encoder_name,
                                      self.decoder_name,

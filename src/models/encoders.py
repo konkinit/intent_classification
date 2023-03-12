@@ -13,8 +13,11 @@ from transformers import (
         XLNetTokenizer)
 if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
-from src.utilis.models_utilis import (
+from src.utils.models_utils import (
     mean_pooling)
+from src.utils.data_utils import (
+    _reshape_)
+
 
 _dict = {
             "bert": [BertModel, BertTokenizer],
@@ -24,10 +27,14 @@ _dict = {
 
 class TransformersEncoder:
     def __init__(self,
-                 model_name: str) -> None:
+                 model_name: str,
+                 format_type: str,
+                 T: int) -> None:
         _transformer = model_name.split('-')[0]
         self.model = _dict[_transformer][0].from_pretrained(model_name)
         self.tokenizer = _dict[_transformer][1].from_pretrained(model_name)
+        self.T = T
+        self.format_type = format_type
 
     def batch_embedding(self, list_texts: List[str]) -> tf.Tensor:
         def item_embedding(texts):
@@ -43,7 +50,10 @@ class TransformersEncoder:
         texts_embedded = list([])
         for texts in tqdm(list_texts):
             texts_embedded.append(item_embedding(texts))
-        return tf.convert_to_tensor(vstack(texts_embedded))
+        _embeddings = tf.convert_to_tensor(vstack(texts_embedded))
+        if self.format_type == "stacked":
+            return _embeddings
+        return _reshape_(_embeddings, self.T)
 
 
 class HierarchicalTransformersEncoder:

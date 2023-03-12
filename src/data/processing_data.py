@@ -5,7 +5,7 @@ from pandas import DataFrame, read_csv
 from typing import Tuple, List
 if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
-from src.utilis.data_utilis import (
+from src.utils.data_utils import (
     get_file_path,
     context_nUtterances_split_level,
     contexts_labels_split_level)

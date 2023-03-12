@@ -5,20 +5,42 @@ from numpy import array_equal, array, mean
 import tensorflow as tf
 if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
-from src.utilis.models_utilis import decoding_pred
+from src.utils.models_utils import decoding_pred
 
 
-class MLP:
+class Decoder:
     def __init__(self,
                  embeddingsDim: int,
-                 n_layers: int,
                  output_dimension: List[int],
-                 f_dropout: float) -> None:
+                 *args) -> None:
         self.model = tf.keras.models.Sequential()
         self.embeddingsDim = embeddingsDim
-        self.nLayers = n_layers
         self.outputDim = output_dimension
-        self.fDropout = f_dropout
+        self.nLayers = args[0]
+        self.fDropout = args[1]
+
+    def _fit(self,
+             embeddings: List[tf.Tensor],
+             labels: List[tf.Tensor]) -> NotImplemented:
+        """
+        Fit the MPL-based decoder
+        """
+        self._build()
+        self.model.fit(embeddings[0],
+                       labels[0],
+                       batch_size=16,
+                       epochs=500,
+                       validation_data=(embeddings[1], labels[1]),
+                       callbacks=[tf.keras.callbacks.EarlyStopping(
+                                  monitor="val_loss", patience=10)])
+
+
+class MLP(Decoder):
+    def __init__(self,
+                 embeddingsDim: int,
+                 output_dimension: List[int],
+                 *args) -> None:
+        super().__init__(embeddingsDim, output_dimension, args[0], args[1])
 
     def _nNeurons(self,
                   inputDim: int,
@@ -30,7 +52,10 @@ class MLP:
         """
         return int((2/3)*inputDim + outputDim)
 
-    def build(self) -> None:
+    def _build(self) -> None:
+        """
+        Build the model architecture
+        """
         self.model.add(
             tf.keras.layers.InputLayer(input_shape=(self.embeddingsDim,)))
         nNeurons = self._nNeurons(
@@ -45,53 +70,52 @@ class MLP:
         self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(),
                            optimizer='adam')
 
-    def evaluate(self,
-                 embeddings: List[tf.Tensor],
-                 labels: List[tf.Tensor]) -> float:
-        """
-        Fit the MPL-based decoder and Evaluate the score on the
-        test split
-        """
-        self.build()
-        assert labels[0][0].shape == tf.TensorShape([
-            self.outputDim[0]*self.outputDim[1]]), "Incompatible output shapes"
-        self.model.fit(embeddings[0],
-                       labels[0],
-                       batch_size=1,
-                       epochs=500,
-                       validation_data=(embeddings[1], labels[1]),
-                       callbacks=[tf.keras.callbacks.EarlyStopping(
-                                  monitor="val_loss", patience=10)])
-        labelsHat = self.model.predict(embeddings[2])
-        self.model.reset_states()
-        yhat = decoding_pred(labelsHat.reshape(labelsHat.shape[0],
-                                               self.outputDim[1],
-                                               self.outputDim[0]))
-        y = array(labels[2]).reshape(labelsHat.shape[0],
-                                     self.outputDim[1],
-                                     self.outputDim[0])
+    def _inference(self,
+                   embeddings: List[tf.Tensor],
+                   labels: List[tf.Tensor]) -> float:
+        self._fit(embeddings, labels)
+        _labelsHat = self.model.predict(embeddings[2])
+        _labelsHat = decoding_pred(_labelsHat.reshape(
+            _labelsHat.shape[0], self.outputDim[1], self.outputDim[0]))
+        _labels = array(labels[2]).reshape(
+            labels[2].shape[0], self.outputDim[1], self.outputDim[0])
         loss_list = [int(array_equal(
-            y[i][j], yhat[i][j])) for i in range(y.shape[0])
-            for j in range(y[i].shape[0])]
+            _labels[i][j], _labelsHat[i][j])) for i in range(_labels.shape[0])
+            for j in range(_labels[i].shape[0])]
         return mean(loss_list)
 
 
-class SequentialGRU:
+class SequentialGRU(Decoder):
     def __init__(self,
                  embeddingsDim: int,
-                 n_layers: int,
                  output_dimension: List[int],
-                 f_dropout: float) -> None:
-        self.model = tf.keras.models.Sequential()
-        self.embeddingsDim = embeddingsDim
-        self.nLayers = n_layers
-        self.outputDim = output_dimension
-        self.fDropout = f_dropout
+                 *args) -> None:
+        super().__init__(embeddingsDim, output_dimension, args[0], args[1])
 
-    def evaluate(self,
-                 embeddings: List[tf.Tensor],
-                 labels: List[tf.Tensor]) -> float:
-        self.model.add(
-            tf.keras.layers.InputLayer(input_shape=(self.embeddingsDim)))
-        self.model.add(tf.keras.layers.GRU(return_sequences=True))
-        return 1.0
+    def _build(self) -> None:
+        """
+        Build the sequential GRU architecture
+        """
+        decoder_inputs = tf.keras.layers.Input(
+                                shape=(self.outputDim[1],
+                                       self.embeddingsDim))
+        decoder_gru = tf.keras.layers.GRU(
+                                self.outputDim[0],
+                                return_sequences=True)
+        hidden_states = decoder_gru(decoder_inputs)
+        self.model = tf.keras.models.Model(
+                    inputs=decoder_inputs, outputs=hidden_states)
+        self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(),
+                           optimizer='adam')
+
+    def _inference(self,
+                   embeddings: List[tf.Tensor],
+                   labels: List[tf.Tensor]) -> float:
+        self._fit(embeddings, labels)
+        _labelsHat = self.model.predict(embeddings[2])
+        _labelsHat = decoding_pred(_labelsHat)
+        _labels = labels[2]
+        loss_list = [int(array_equal(
+            _labels[i][j], _labelsHat[i][j])) for i in range(_labels.shape[0])
+            for j in range(_labels[i].shape[0])]
+        return mean(loss_list)

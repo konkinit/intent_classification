@@ -11,7 +11,7 @@ of conversations <br/> </p>
 </p>
 
 <p align="center">
-    <img alt="Licence" src="https://img.shields.io/bower/l/MI?style=for-the-badge"> <img alt="Repo size" src="https://img.shields.io/github/repo-size/konkinit/intent_classification?style=for-the-badge">
+    <img alt="Licence" src="https://img.shields.io/bower/l/MI?style=for-the-badge"> <img alt="Repo size" src="https://img.shields.io/github/repo-size/konkinit/intent_classification?style=for-the-badge"> <img src="Python 3.10" src="https://img.shields.io/badge/Python-3.10-cyan>
 </p>
 
 
@@ -33,6 +33,8 @@ pip install -r requirements.txt
 4. Run the notebook `./notebooks/experimental_results.ipynb`
 
 
+## Architecture of used models
+
 ## References
 
 See the directory `/papers`
@@ -43,17 +45,5 @@ dialog representations. EMNLP 2021
 [2] Emile Chapuis,Pierre Colombo, Matteo Manica, Matthieu Labeau, and Chloé Clavel. Hierarchical pre-training for
 sequence labelling in spoken dialog. Finding of EMNLP 2020
 
-[3] Tanvi Dinkar, Pierre Colombo , Matthieu Labeau, and Chloé Clavel. The importance of fillers for text representations
-of speech transcripts. EMNLP 2020
-
-[4] Hamid Jalalzai, Pierre Colombo , Chloe Clavel, Eric Gaussier, Giovanna Varni, Emmanuel Vignon, and Anne Sabourin.
-Heavy-tailed representations, text polarity classification & data augmentation. NeurIPS 2020
-
 [5] Pierre Colombo, Emile Chapuis, Matteo Manica, Emmanuel Vignon, Giovanna Varni, and Chloé Clavel. Guiding attention
 in sequence-to-sequence models for dialogue act prediction. (oral) AAAI 2020
-
-[6] Alexandre Garcia,Pierre Colombo, Slim Essid, Florence d’Alché-Buc, and Chloé Clavel. From the token to the review: 
-A hierarchical multimodal approach to opinion mining. EMNLP 2020
-
-[7] Pierre Colombo, Wojciech Witon, Ashutosh Modi, James Kennedy, and Mubbasir Kapadia. Affect-driven dialog generation.
-NAACL 2019

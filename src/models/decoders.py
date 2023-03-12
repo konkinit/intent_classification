@@ -5,7 +5,9 @@ from numpy import array_equal, array, mean
 import tensorflow as tf
 if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
-from src.utils.models_utils import decoding_pred
+from src.utils.models_utils import (
+    decoding_pred,
+    _confusion_matrix)
 
 
 class Decoder:
@@ -72,7 +74,8 @@ class MLP(Decoder):
 
     def _inference(self,
                    embeddings: List[tf.Tensor],
-                   labels: List[tf.Tensor]) -> float:
+                   labels: List[tf.Tensor],
+                   list_labels: List[str]) -> float:
         self._fit(embeddings, labels)
         _labelsHat = self.model.predict(embeddings[2])
         _labelsHat = decoding_pred(_labelsHat.reshape(
@@ -82,7 +85,8 @@ class MLP(Decoder):
         loss_list = [int(array_equal(
             _labels[i][j], _labelsHat[i][j])) for i in range(_labels.shape[0])
             for j in range(_labels[i].shape[0])]
-        return mean(loss_list)
+        return mean(loss_list), _confusion_matrix(
+            _labels, _labelsHat, list_labels)
 
 
 class SequentialGRU(Decoder):
@@ -110,7 +114,8 @@ class SequentialGRU(Decoder):
 
     def _inference(self,
                    embeddings: List[tf.Tensor],
-                   labels: List[tf.Tensor]) -> float:
+                   labels: List[tf.Tensor],
+                   list_labels: List[str]) -> float:
         self._fit(embeddings, labels)
         _labelsHat = self.model.predict(embeddings[2])
         _labelsHat = decoding_pred(_labelsHat)
@@ -118,4 +123,5 @@ class SequentialGRU(Decoder):
         loss_list = [int(array_equal(
             _labels[i][j], _labelsHat[i][j])) for i in range(_labels.shape[0])
             for j in range(_labels[i].shape[0])]
-        return mean(loss_list)
+        return mean(loss_list), _confusion_matrix(
+            _labels, _labelsHat, list_labels)

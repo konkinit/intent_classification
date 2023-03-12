@@ -38,9 +38,10 @@ def context_nUtterances_split_level(df: DataFrame, T: int) -> DataFrame:
 
 def contexts_labels_split_level(
         df_: DataFrame,
-        set_labels: list, 
+        set_labels: set,
         type_format: str) -> Tuple[List[str], Tensor]:
     df = df_.copy()
+    def f_(x, label): return int(x == label)
     if type_format == "stacked":
         df["LabelVector"] = df["Label"].apply(
             lambda x: array([int(x == label) for label in set_labels]))
@@ -54,7 +55,6 @@ def contexts_labels_split_level(
                                 .apply(lambda x: list(hstack(x)))
                                 .to_list(), dtype="int32")))
     else:
-        def f_(x, label): return int(x == label)
         df["LabelVector"] = df["Label"].apply(lambda x: array([
             f_(x, label) for label in set_labels]))
         return (df.groupby("Dialogue_ID")["Utterance"]

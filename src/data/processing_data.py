@@ -25,15 +25,17 @@ class Format:
                                  sep="|") for split in _split_])
         self.T = T
         self.type_format = type_format
+        self.Labels = list()
 
     def get_distincts_labels(self) -> list:
         """
         Return the distinct labels accross the 3 splits of dataset
         """
-        list_labels = set()
+        set_of_labels = set()
         for df_ in self.df:
-            list_labels = list_labels | set(df_["Label"].unique())
-        return list(list_labels)
+            set_of_labels = set_of_labels | set(df_["Label"].unique())
+        self.Labels = list(set_of_labels)
+        return self.Labels
 
     def get_context_nUtterances(self) -> DataFrame:
         """
@@ -49,10 +51,11 @@ class Format:
         Return the contexts and labels in a stacked format
         """
         contexts, labels = list([]), list([])
+        set_of_labels = self.get_distincts_labels()
         for df in self.get_context_nUtterances():
             contexts.append(contexts_labels_split_level(
-                df, self.get_distincts_labels(), self.type_format)[0])
+                df, set_of_labels, self.type_format)[0])
             labels.append(contexts_labels_split_level(
-                df, self.get_distincts_labels(), self.type_format)[1])
-            len_label_set = len(self.get_distincts_labels())
+                df, set_of_labels, self.type_format)[1])
+            len_label_set = len(set_of_labels)
         return len_label_set, contexts, labels

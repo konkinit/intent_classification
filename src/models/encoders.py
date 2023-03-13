@@ -32,7 +32,9 @@ class TransformersEncoder:
                  T: int) -> None:
         _transformer = model_name.split('-')[0]
         self.model = _dict[_transformer][0].from_pretrained(model_name)
-        self.tokenizer = _dict[_transformer][1].from_pretrained(model_name)
+        self.tokenizer = _dict[_transformer][1].from_pretrained(
+                                                model_name,
+                                                model_max_length=512)
         self.T = T
         self.format_type = format_type
 

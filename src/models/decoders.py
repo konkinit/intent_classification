@@ -32,6 +32,7 @@ class Decoder:
                        labels[0],
                        batch_size=16,
                        epochs=500,
+                       verbose=2,
                        validation_data=(embeddings[1], labels[1]),
                        callbacks=[tf.keras.callbacks.EarlyStopping(
                                   monitor="val_loss", patience=10)])

@@ -66,7 +66,7 @@ def getDataTF(dataset: str, split_: str, label_name: str) -> None:
 _split_ = ["train", "validation", "test"]
 
 _datasets_da_ = ["swda", "dyda_da", "mrda"]
-_datasets_e_ = ["meld_e", "dyda_e", "meld_s", "iemocap"]
+_datasets_e_ = ["meld_e", "dyda_e", "iemocap"]
 _datasets_s_ = ["meld_s", "sem"]
 
 _dict_datasets = {

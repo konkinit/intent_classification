@@ -40,9 +40,10 @@ def contexts_labels_split_level(
         df_: DataFrame,
         set_labels: set,
         type_format: str) -> Tuple[List[str], Tensor]:
+    assert type_format in ("concatenate", "separate"), "Incorrec format type"
     df = df_.copy()
     def f_(x, label): return int(x == label)
-    if type_format == "stacked":
+    if type_format == "concatenate":
         df["LabelVector"] = df["Label"].apply(
             lambda x: array([int(x == label) for label in set_labels]))
         return ((df.groupby("Dialogue_ID")["Utterance"]

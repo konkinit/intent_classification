@@ -1,10 +1,10 @@
 import sys
 import os
-from typing import List
+from typing import List, Union
 import tensorflow as tf
-from numpy import vstack
+from numpy import vstack, array
 from tqdm import tqdm
-from torch import no_grad
+from torch import no_grad, Tensor
 from torch.nn.functional import normalize
 from transformers import (
         BertModel,
@@ -21,43 +21,65 @@ from src.utils.data_utils import (
 
 _dict = {
             "bert": [BertModel, BertTokenizer],
+            "prajjwal1/bert": [BertModel, BertTokenizer],
             "xlnet": [XLNetModel, XLNetTokenizer]
         }
 
 
 class TransformersEncoder:
-    def __init__(self,
-                 model_name: str,
-                 format_type: str,
-                 T: int) -> None:
+    def __init__(
+            self,
+            model_name: str,
+            T: int) -> None:
         _transformer = model_name.split('-')[0]
         self.model = _dict[_transformer][0].from_pretrained(model_name)
         self.tokenizer = _dict[_transformer][1].from_pretrained(
-                                                model_name,
-                                                model_max_length=512)
+                                                model_name)
         self.T = T
-        self.format_type = format_type
 
-    def batch_embedding(self, list_texts: List[str]) -> tf.Tensor:
-        def item_embedding(texts):
-            encoded_input = self.tokenizer(texts,
-                                           padding=True,
-                                           truncation=True,
-                                           return_tensors='pt')
-            with no_grad():
-                model_output = self.model(**encoded_input)
-            return normalize(mean_pooling(model_output,
-                                          encoded_input['attention_mask']),
-                             p=2, dim=1)
-        texts_embedded = list([])
-        for texts in tqdm(list_texts):
-            texts_embedded.append(item_embedding(texts))
-        _embeddings = tf.convert_to_tensor(vstack(texts_embedded))
-        if self.format_type == "stacked":
-            return _embeddings
-        return _reshape_(_embeddings, self.T)
+    def get_embeddings(
+                self,
+                list_inputs: Union[List[str],
+                                   List[List[str]],
+                                   List[tf.Tensor]]) -> tf.Tensor:
+        def _embedding(item_inputs:  Union[str, List[str]]):
+            if type(item_inputs) in (str, list):
+                encoded_input = self.tokenizer(
+                                        item_inputs,
+                                        padding=True,
+                                        truncation=True,
+                                        return_tensors='pt')
+                with no_grad():
+                    model_output = self.model(**encoded_input)
+                return normalize(
+                        mean_pooling(model_output,
+                                     encoded_input['attention_mask']),
+                        p=2, dim=1)
+            else:
+                with no_grad():
+                    model_output = self.model(
+                                Tensor(array(item_inputs)).long())
+                return model_output["last_hidden_state"]
+
+        _embeddings = list([])
+        for item in tqdm(list_inputs):
+            _embeddings.append(_embedding(item))
+        _embeddings = tf.convert_to_tensor(vstack(_embeddings))
+        return (_embeddings if type(list_inputs[0]) in (str,)
+                else _reshape_(_embeddings, self.T))
 
 
-class HierarchicalTransformersEncoder:
-    def __init__(self) -> None:
-        pass
+class HierarchicalTransformersEncoder(TransformersEncoder):
+    def __init__(
+            self,
+            model_name: str,
+            T: int) -> None:
+        super().__init__(model_name, T)
+
+    def hierarchical_embeddings(
+                self,
+                list_texts: List[List[str]]) -> tf.Tensor:
+        _embeddings = list([])
+        for dialog in tqdm(list_texts[0]):
+            _embeddings.append(self.get_embeddings(dialog))
+        return self.get_embeddings(_embeddings)

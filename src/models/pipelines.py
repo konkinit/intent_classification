@@ -18,19 +18,19 @@ _dict_decoder = {
 class Pipeline:
     def __init__(self,
                  dataset_name: str,
-                 data_format_type: str,
                  T: int,
                  encoder_name: str,
                  decoder_name: str,
+                 data_format_type: str,
                  *args) -> None:
         self.dataset_name = dataset_name
-        self.data_format_type = data_format_type
         self.T = T
         self.encoder_name = encoder_name
+        self.data_format_type = data_format_type
         self.decoder_name = decoder_name
         self.args = args if len(args) > 0 else [3, 0.2]
         self.df_report = DataFrame()
-        self.confusion_mat = array([])
+        self.confusion_matrix = array([])
 
     def summarize(self) -> None:
         """
@@ -43,15 +43,14 @@ class Pipeline:
         dimLabelSet, contexts, labels = format_obj.get_contexts_labels()
         set_labels = format_obj.get_distincts_labels()
         embeddings = list([(TransformersEncoder(self.encoder_name,
-                                                self.data_format_type,
                                                 self.T)
-                            .batch_embedding(contexts[i]))
+                            .get_embeddings(contexts[i]))
                            for i in range(len(contexts))])
-        if self.data_format_type == "stacked":
+        if self.data_format_type == "concatenate":
             embeddingsDim = embeddings[0].shape[1]
         else:
             embeddingsDim = embeddings[0].shape[2]
-        performance, self.confusion_mat = _dict_decoder[self.decoder_name](
+        performance, self.confusion_matrix = _dict_decoder[self.decoder_name](
                                 embeddingsDim,
                                 [dimLabelSet, self.T],
                                 self.args[0],

@@ -1,7 +1,7 @@
 import os
 import sys
-from typing import List
-from numpy import array_equal, array, mean
+from typing import List, Tuple
+from numpy import array_equal, array, mean, ndarray
 import tensorflow as tf
 if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
@@ -32,7 +32,7 @@ class Decoder:
                        labels[0],
                        batch_size=16,
                        epochs=500,
-                       verbose=2,
+                       verbose=0,
                        validation_data=(embeddings[1], labels[1]),
                        callbacks=[tf.keras.callbacks.EarlyStopping(
                                   monitor="val_loss", patience=10)])
@@ -76,7 +76,7 @@ class MLP(Decoder):
     def _inference(self,
                    embeddings: List[tf.Tensor],
                    labels: List[tf.Tensor],
-                   list_labels: List[str]) -> float:
+                   list_labels: List[str]) -> Tuple[float, ndarray]:
         self._fit(embeddings, labels)
         _labelsHat = self.model.predict(embeddings[2])
         _labelsHat = decoding_pred(_labelsHat.reshape(
@@ -116,7 +116,7 @@ class SequentialGRU(Decoder):
     def _inference(self,
                    embeddings: List[tf.Tensor],
                    labels: List[tf.Tensor],
-                   list_labels: List[str]) -> float:
+                   list_labels: List[str]) -> Tuple[float, ndarray]:
         self._fit(embeddings, labels)
         _labelsHat = self.model.predict(embeddings[2])
         _labelsHat = decoding_pred(_labelsHat)

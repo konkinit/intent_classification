@@ -3,8 +3,8 @@
     <br/>
 </h1>
 
-<p align="center">The project consists of building an intent classifier which goal is pedict to the sequence of labels 
-of conversations <br/> </p>
+<p align="center">The project consists of building an intent classifier which purpose is to pedict the sequence of labels 
+in a dialogue <br/> </p>
 
 <p align="center">
     <img alt="Test & Lint" src="https://img.shields.io/github/actions/workflow/status/konkinit/intent_classification/test_lint.yaml?label=Lint%20and%20TEST&style=for-the-badge">
@@ -15,9 +15,6 @@ of conversations <br/> </p>
 target="_blank"><img src="https://img.shields.io/badge/python-3.10-blue.svg?style=for-the-badge" alt="Python Version" /></a>
 </p>
 
-
-
-
 ## Getting Started
 
 1. Clone the repository
@@ -25,18 +22,25 @@ target="_blank"><img src="https://img.shields.io/badge/python-3.10-blue.svg?styl
 git clone https://github.com/konkinit/intent_classification.git
 ```
 
-2. Upgrade `pip` and install the required packages
+2. Upgrade `pip` and install the dependencies
 ```bash
 python -m pip install --upgrade pip
-pip install -r requirements.txt
+pip install -r requirements.txt --user
 ```
 
-3. Run the script `./src/utilis/get_datasets.py` to download the [SILICONE datasets](https://huggingface.co/datasets/silicone)
+3. Run the script `./src/utils/get_datasets.py` to download the part of experiment datasets of [SILICONE](https://huggingface.co/datasets/silicone)
 
 4. Run the notebook `./notebooks/experimental_results.ipynb`
 
 
 ## Architecture of used models
+
+
+
+## Experimental results
+
+The models we dsigned have been applied to some datasets of [SILICONE](https://huggingface.co/datasets/silicone)
+to obtain the following results:
 
 ## References
 

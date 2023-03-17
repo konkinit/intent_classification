@@ -3,66 +3,43 @@
     <br/>
 </h1>
 
-<p align="center">The project consists of building an intent classifier. Several benchmark have been released involving 
-english or multlingual setting <br/> </p>
+<p align="center">The project consists of building an intent classifier which purpose is to pedict the sequence of labels 
+in a dialogue <br/> </p>
 
 <p align="center">
     <img alt="Test & Lint" src="https://img.shields.io/github/actions/workflow/status/konkinit/intent_classification/test_lint.yaml?label=Lint%20and%20TEST&style=for-the-badge">
 </p>
 
 <p align="center">
-    <img alt="Licence" src="https://img.shields.io/bower/l/MI?style=for-the-badge"> <img alt="Repo size" src="https://img.shields.io/github/repo-size/konkinit/intent_classification?style=for-the-badge">
+    <img alt="Licence" src="https://img.shields.io/bower/l/MI?style=for-the-badge"> <img alt="Repo size" src="https://img.shields.io/github/repo-size/konkinit/intent_classification?style=for-the-badge"> <a href="https://www.python.org/downloads/release/python-3100/" 
+target="_blank"><img src="https://img.shields.io/badge/python-3.10-blue.svg?style=for-the-badge" alt="Python Version" /></a>
 </p>
 
-## General Context
+## Getting Started
 
-The identification of both Dialog Acts (DA) and Emotion/Sentiment (E/S) in spoken language is an important step toward
-improving model performances on spontaneous dialogue task. Especially, it is essential to avoid the generic response
-problem, i.e., having an automatic dialog system generate an unspecific response — that can be an answer to a very large
-number of user utterances. DAs and emotions are identified through sequence labeling systems that are trained in a
-supervised manner DAs and emot0ions have been particularly useful for training ChatGPT.
+1. Clone the repository
+```bash
+git clone https://github.com/konkinit/intent_classification.git
+```
 
-## Problem Statement:
+2. Upgrade `pip` and install the dependencies
+```bash
+python -m pip install --upgrade pip
+pip install -r requirements.txt --user
+```
 
-We start by formally defining the Sequence Labelling Problem. At the highest level, we have a set $D$ of conversations
-composed of utterances, i.e., $D = (C_1,C_2,\dots,C_{|D|})$ with $Y= (Y_1,Y_2,\dots,Y_{|D|})$ being the corresponding
-set of labels (e.g., DA,E/S). At a lower level each conversation $C_i$ is composed of utterances $u$, i.e 
-$C_i = (u_1, u_2, \dots, u_{|C_i|})$ with $Y_i = (y_1, y_2, \dots, y_{|C_i|})$ being the corresponding sequence of 
-labels: each $u_i$ is associated with a unique label $y_i$. At the lowest level, each utterance $u_i$ can be seen as a 
-sequence of words, i.e $u_i = (\omega^i_1, \omega^i_2, \dots, \omega^i_{|u_i|})$.
+3. Run the script `./src/utils/get_datasets.py` to download the part of experiment datasets of [SILICONE](https://huggingface.co/datasets/silicone)
 
-The goal is to predict Y from D !
+4. Run the notebook `./notebooks/experimental_results.ipynb`
 
-## Examples
 
-| Utterances                                                                          | DA                    |
-|-------------------------------------------------------------------------------------|-----------------------|
-| How long does that take you to get to work?                                         | Question (WH)         |
-| Uh, about forty-five, fifty minutes.                                                | Declarative Satetemnt |
-| How does that work, work out with, uh, storing your bike and showering and all that | Question (WH)         |
-| Yeah                                                                                | backchanel            |
-| It can be a pain .                                                                  | Declarative datetemnt |
+## Architecture of used models
 
-## References: 
-See the folder `/papers`
 
-[1] Emile Chapuis,Pierre Colombo, Matthieu Labeau, and Chloé Clavel. Code-switched inspired losses for generic spoken
-dialog representations. EMNLP 2021
 
-[2] Emile Chapuis,Pierre Colombo, Matteo Manica, Matthieu Labeau, and Chloé Clavel. Hierarchical pre-training for
-sequence labelling in spoken dialog. Finding of EMNLP 2020
+## Experimental results
 
-[3] Tanvi Dinkar, Pierre Colombo , Matthieu Labeau, and Chloé Clavel. The importance of fillers for text representations
-of speech transcripts. EMNLP 2020
+The models we dsigned have been applied to some datasets of [SILICONE](https://huggingface.co/datasets/silicone)
+to obtain the following results:
 
-[4] Hamid Jalalzai, Pierre Colombo , Chloe Clavel, Eric Gaussier, Giovanna Varni, Emmanuel Vignon, and Anne Sabourin.
-Heavy-tailed representations, text polarity classification & data augmentation. NeurIPS 2020
 
-[5] Pierre Colombo, Emile Chapuis, Matteo Manica, Emmanuel Vignon, Giovanna Varni, and Chloé Clavel. Guiding attention
-in sequence-to-sequence models for dialogue act prediction. (oral) AAAI 2020
-
-[6] Alexandre Garcia,Pierre Colombo, Slim Essid, Florence d’Alché-Buc, and Chloé Clavel. From the token to the review: A
-hierarchical multimodal approach to opinion mining. EMNLP 2020
-
-[7] Pierre Colombo, Wojciech Witon, Ashutosh Modi, James Kennedy, and Mubbasir Kapadia. Affect-driven dialog generation.
-NAACL 2019

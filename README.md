@@ -17,6 +17,10 @@ target="_blank"><img src="https://img.shields.io/badge/python-3.10-blue.svg?styl
 
 ## Getting Started
 
+Refer to the paper for [Intent Classif](https://fr.overleaf.com/read/ryrvbgysmnck) for more apprehension on the project
+
+To run the code , follow these:
+
 1. Clone the repository
 ```bash
 git clone https://github.com/konkinit/intent_classification.git
@@ -38,6 +42,7 @@ pip install -r requirements.txt --user
 We design 4 models based on the below encoder-decoder architecture. Typically an encoder is a transformer in our case a BERT or XLNet model 
 and a decoder a neural network which can be a plain MLP or a GRU.
 
+![archi_plot](./figs/archi.png)
 
 ## Experimental results
 
@@ -50,7 +55,3 @@ to obtain the following results:
 | BERT + GRU   | 44.0 | 81.9 | 69.3 | 86.7 | 60.5 | 70.3 |
 | XLNet + MLP  | 39.1 | 61.7 | 69.3 | 85.7 | 52.3 | 53.7 |
 | XLNet + GRU  | 58.7 | 78.3 | 69.3 | 85.3 | 51.2 | 63.9 |
-
-## 
-
-Refer on the paper for [Intent Classif]() for more apprehension 

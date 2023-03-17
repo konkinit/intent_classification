@@ -34,7 +34,7 @@ pip install -r requirements.txt --user
 
 
 ## Architecture of used models
-
+4 architectures have been designed 
 
 
 ## Experimental results
@@ -43,7 +43,7 @@ The models we dsigned have been applied to some datasets of [SILICONE](https://h
 to obtain the following results:
 
 |  Architecture  | $\mathtt{SWdA}$ | $\mathtt{DyDA_a}$ | $\mathtt{MRDA}$ | $\mathtt{MRDA}$ | $\mathtt{MRDA}$ | $\mathtt{MRDA}$ |
-| --------  | ------------------- | --------------------- | --------------------- | --------------------- | --------------------- | --------------------- |
+|:--------------:|:---------------:|:-----------------:|:---------------:|:---------------:|:---------------:|:----------------:|
 | BERT + MLP   | 37.4 | 63.5 | 69.1 | 86.1 | 52.0 | 57.8 |
 | BERT + GRU   | 44.0 | 81.9 | 69.3 | 86.7 | 60.5 | 70.3 |
 | XLNet + MLP  | 39.1 | 61.7 | 69.3 | 85.7 | 52.3 | 53.7 |

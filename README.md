@@ -42,11 +42,11 @@ pip install -r requirements.txt --user
 The models we dsigned have been applied to some datasets of [SILICONE](https://huggingface.co/datasets/silicone)
 to obtain the following results:
 
-|  Architecture  | $\texttt{SWdA}$ | $\texttt{DyDA_a}$ |
-| --------  | ------------------- | --------------------- |
-| BERT + MLP | 37.4 | 63.5                   | 
-| BERT + GRU      | 44.0  |  81.9              | 
-|  XLNet + MLP | 39.1 | 61.7                   | 
-| XLNet + GRU      | 58.7 | 78.3             | 
+|  Architecture  | $\mathtt{SWdA}$ | $\mathtt{DyDA_a}$ | $\mathtt{MRDA}$ |
+| --------  | ------------------- | --------------------- | --------------------- |
+| BERT + MLP | 37.4 | 63.5                   | 69.1 |
+| BERT + GRU      | 44.0  |  81.9              |  69.3 |
+|  XLNet + MLP | 39.1 | 61.7                   |  69.3 |
+| XLNet + GRU      | 58.7 | 78.3             | 69.3 |
 
 

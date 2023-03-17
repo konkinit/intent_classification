@@ -104,10 +104,9 @@ class SequentialGRU(Decoder):
         decoder_inputs = tf.keras.layers.Input(
                                 shape=(self.outputDim[1],
                                        self.embeddingsDim))
-        decoder_gru = tf.keras.layers.GRU(
+        hidden_states = tf.keras.layers.GRU(
                                 self.outputDim[0],
-                                return_sequences=True)
-        hidden_states = decoder_gru(decoder_inputs)
+                                return_sequences=True)(decoder_inputs)
         self.model = tf.keras.models.Model(
                     inputs=decoder_inputs, outputs=hidden_states)
         self.model.compile(loss=tf.keras.losses.BinaryCrossentropy(),

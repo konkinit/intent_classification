@@ -3,7 +3,6 @@ import os
 from typing import List, Union
 import tensorflow as tf
 from numpy import vstack, array
-from tqdm import tqdm
 from torch import no_grad, Tensor
 from torch.nn.functional import normalize
 from transformers import (
@@ -62,10 +61,10 @@ class TransformersEncoder:
                 return model_output["last_hidden_state"]
 
         _embeddings = list([])
-        for item in tqdm(list_inputs):
+        for item in list_inputs:
             _embeddings.append(_embedding(item))
         _embeddings = tf.convert_to_tensor(vstack(_embeddings))
-        return (_embeddings if type(list_inputs[0]) in (str,)
+        return (_embeddings if type(list_inputs[0]) not in (list,)
                 else _reshape_(_embeddings, self.T))
 
 
@@ -79,7 +78,5 @@ class HierarchicalTransformersEncoder(TransformersEncoder):
     def hierarchical_embeddings(
                 self,
                 list_texts: List[List[str]]) -> tf.Tensor:
-        _embeddings = list([])
-        for dialog in tqdm(list_texts[0]):
-            _embeddings.append(self.get_embeddings(dialog))
+        _embeddings = self.get_embeddings(list_texts)
         return self.get_embeddings(_embeddings)

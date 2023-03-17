@@ -1,31 +1,10 @@
 import os
 import sys
-import requests as req
-import pandas as pd
 import tensorflow_datasets as tfds
 
 
 if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
-
-
-def getDataHF(_url_: str) -> None:
-    """
-    Get the dataset using Hugging Face API
-
-    Args:
-        _url_ (str): dataset url
-
-    Returns:
-        _type_: None
-    """
-    dialogs = req.get(url=_url_).json()
-    return pd.DataFrame.from_dict(
-                [dialogs["rows"][i]["row"]
-                    for i in range(len(dialogs["rows"]))])[["Idx",
-                                                            "Utterance",
-                                                            "Dialogue_ID",
-                                                            "Label"]]
 
 
 def getDataTF(dataset: str, split_: str, label_name: str) -> None:
@@ -45,11 +24,13 @@ def getDataTF(dataset: str, split_: str, label_name: str) -> None:
                      f"./inputs_data/data_{dataset}_{split}.csv")):
         pass
     else:
-        (tfds.as_dataframe(tfds.load(data_str, split=split_))[["Idx",
-                                                               "Utterance",
-                                                               "Dialogue_ID",
-                                                               label_name]]
-         .apply(
+        df = tfds.as_dataframe(tfds.load(data_str, split=split_))
+        if "Dialogue_ID" in df.columns:
+            df = df[["Idx", "Utterance", "Dialogue_ID", label_name]]
+        else:
+            df = df[["Idx", "Utterance", label_name]]
+            df["Dialogue_ID"] = df["Idx"]
+        (df.apply(
             lambda x: x.apply(
                 lambda z: z.decode("utf-8") if type(z) == bytes else z),
             axis=1)
@@ -65,9 +46,9 @@ def getDataTF(dataset: str, split_: str, label_name: str) -> None:
 
 _split_ = ["train", "validation", "test"]
 
-_datasets_da_ = ["swda", "dyda_da", "mrda"]
-_datasets_e_ = ["meld_e", "dyda_e", "iemocap"]
-_datasets_s_ = ["meld_s", "sem"]
+_datasets_da_ = ["swda", "dyda_da", "mrda", "oasis"]
+_datasets_e_ = ["meld_e", "dyda_e"]
+_datasets_s_ = ["meld_s"]
 
 _dict_datasets = {
     "Dialogue_Act": _datasets_da_,

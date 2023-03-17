@@ -42,15 +42,4 @@ pip install -r requirements.txt --user
 The models we dsigned have been applied to some datasets of [SILICONE](https://huggingface.co/datasets/silicone)
 to obtain the following results:
 
-## References
 
-See the directory `/papers`
-
-[1] Emile Chapuis,Pierre Colombo, Matthieu Labeau, and Chloé Clavel. Code-switched inspired losses for generic spoken
-dialog representations. EMNLP 2021
-
-[2] Emile Chapuis,Pierre Colombo, Matteo Manica, Matthieu Labeau, and Chloé Clavel. Hierarchical pre-training for
-sequence labelling in spoken dialog. Finding of EMNLP 2020
-
-[5] Pierre Colombo, Emile Chapuis, Matteo Manica, Emmanuel Vignon, Giovanna Varni, and Chloé Clavel. Guiding attention
-in sequence-to-sequence models for dialogue act prediction. (oral) AAAI 2020

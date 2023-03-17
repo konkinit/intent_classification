@@ -17,12 +17,11 @@ target="_blank"><img src="https://img.shields.io/badge/python-3.10-blue.svg?styl
 
 Source code of the paper [Intents Classification for Neural Text Generation](https://fr.overleaf.com/read/ryrvbgysmnck)
 
-
 Abstract :
 
->*The hype around OpenAI's ChatGPT has more than ever sparked interest in AI-based bots where labeling and classification of utterances are a centerpiece in order to improve user experience. Broadly, Dialogue Acts ($\texttt{DA}$) and Emotion/Sentiment ($\texttt{E/S}$) tasks are identified through sequence labeling systems that are trained in a supervised manner. In this work, we propose four encoder-decoder models 
+*The hype around OpenAI's ChatGPT has more than ever sparked interest in AI-based bots where labeling and classification of utterances are a centerpiece in order to improve user experience. Broadly, Dialogue Acts (DA) and Emotion/Sentiment (E/S) tasks are identified through sequence labeling systems that are trained in a supervised manner. In this work, we propose four encoder-decoder models 
 to learn generic representations adapted to the spoken dialog, which we evaluate on six datasets of different sizes of a benchmark we call Sequence labellIng
-Evaluation benChmark fOr spoken laNguagE benchmark ($\texttt{SILICONE}$). Designed models are represented with either a hierarchical encoder or non-hierarchical encoders both based on pre-trained transformers (BERT/XLNet). We notice the failure of the models to learn some datasets due to their inherent properties but in general, the BERT-GRU architecture is the best model regarding accuracy.*
+Evaluation benChmark fOr spoken laNguagE benchmark (SILICONE). Designed models are represented with either a hierarchical encoder or non-hierarchical encoders both based on pre-trained transformers (BERT/XLNet). We notice the failure of the models to learn some datasets due to their inherent properties but in general, the BERT-GRU architecture is the best model regarding accuracy.*
 
 ## Getting Started
 

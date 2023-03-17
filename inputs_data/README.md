@@ -1,5 +1,5 @@
 <h1 align="center">
-    The `inputs_data` directory
+    The **inputs_data** directory
     </br>
 </h1>
 

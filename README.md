@@ -35,7 +35,7 @@ pip install -r requirements.txt --user
 
 ## Architecture of used models
 
-4 architectures have been designed 
+We design 4 encoder-decoder architectures
 
 
 ## Experimental results
@@ -43,7 +43,7 @@ pip install -r requirements.txt --user
 The models we dsigned have been applied to some datasets of [SILICONE](https://huggingface.co/datasets/silicone)
 to obtain the following results:
 
-|  Architecture  | $\mathtt{SWdA}$ | $\mathtt{DyDA_a}$ | $\mathtt{MRDA}$ | $\mathtt{MRDA}$ | $\mathtt{MRDA}$ | $\mathtt{MRDA}$ |
+|  Architecture  | $\mathtt{SWdA}$ | $\mathtt{DyDA_a}$ | $\mathtt{MRDA}$ | $\mathtt{DyDA_e}$ | $\mathtt{MELD_e}$ | $\mathtt{MELD_s}$ |
 |:--------------:|:---------------:|:-----------------:|:---------------:|:---------------:|:---------------:|:----------------:|
 | BERT + MLP   | 37.4 | 63.5 | 69.1 | 86.1 | 52.0 | 57.8 |
 | BERT + GRU   | 44.0 | 81.9 | 69.3 | 86.7 | 60.5 | 70.3 |

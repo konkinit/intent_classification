@@ -35,7 +35,8 @@ pip install -r requirements.txt --user
 
 ## Architecture of used models
 
-We design 4 encoder-decoder architectures
+We design 4 models based on the below encoder-decoder architecture. Typically an encoder is a transformer in our case a BERT or XLNet model 
+and a decoder a neural network which can be a plain MLP or a GRU.
 
 
 ## Experimental results
@@ -50,5 +51,6 @@ to obtain the following results:
 | XLNet + MLP  | 39.1 | 61.7 | 69.3 | 85.7 | 52.3 | 53.7 |
 | XLNet + GRU  | 58.7 | 78.3 | 69.3 | 85.3 | 51.2 | 63.9 |
 
+## 
 
-
+Refer on the paper for [Intent Classif]() for more apprehension 

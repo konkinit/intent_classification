@@ -39,10 +39,12 @@ pip install -r requirements.txt --user
 
 ## Architecture of used models
 
-We design 4 models based on the below encoder-decoder architecture. Typically an encoder is a transformer in our case a BERT or XLNet model 
+We design 4 models based on the below encoder-decoder architecture as shown below where $\mathcal{T}$ and $\mathcal{D}$ are 
+respectively an encoder and a decoder. Typically an encoder is a transformer in our case a BERT or XLNet model 
 and a decoder a neural network which can be a plain MLP or a GRU.
 
 ![archi_plot](./figs/archi.png)
+
 
 ## Experimental results
 

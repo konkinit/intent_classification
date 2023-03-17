@@ -39,6 +39,17 @@ def _reshape_decode(x: tf.Tensor, list_labels: list):
 def _confusion_matrix(y: tf.Tensor,
                       yHat: tf.Tensor,
                       list_labels: list) -> ndarray:
+    """
+    Compute the confusion matrix after reshape inputs
+
+    Args:
+        y (tf.Tensor): y true
+        yHat (tf.Tensor): y predicted
+        list_labels (list): list of labls for annotation
+
+    Returns:
+        ndarray: confusion matrix
+    """
     labels, labelsHat = (
                     _reshape_decode(y, list_labels),
                     _reshape_decode(yHat, list_labels)

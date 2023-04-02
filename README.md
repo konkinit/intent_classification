@@ -13,17 +13,17 @@
 </p>
 
 <p align="center">
-    <img alt="Licence" src="https://img.shields.io/bower/l/MI?style=for-the-badge"> <img alt="Repo size" src="https://img.shields.io/github/repo-size/konkinit/intent_classification?style=for-the-badge"> <a href="https://www.python.org/downloads/release/python-3100/" 
-target="_blank"><img src="https://img.shields.io/badge/python-3.10-blue.svg?style=for-the-badge" alt="Python Version" /></a>
+    <img alt="Licence" src="https://img.shields.io/bower/l/MI?style=for-the-badge"> 
+    <img alt="Repo size" src="https://img.shields.io/github/repo-size/konkinit/intent_classification?style=for-the-badge"> 
+    <a href="https://www.python.org/downloads/release/python-3100/" target="_blank">
+        <img src="https://img.shields.io/badge/python-3.10-blue.svg?style=for-the-badge" alt="Python Version"/>
+    </a>
 </p>
 
-<p align="center">
-    <img src="https://img.shields.io/badge/Overleaf-47A141?style=for-the-badge&logo=Overleaf&logoColor=white">
-</p>
 
 <p align="center">
     <a href="https://fr.overleaf.com/6151584112drdsyxchsryy" target="_blank">
-        <img src="https://img.shields.io/badge/Overleaf-47A141?style=for-the-badge&logo=Overleaf&logoColor=white" alt="SOURCE CODE" /> 
+        <img src="https://img.shields.io/badge/Overleaf-47A141?style=for-the-badge&logo=Overleaf&logoColor=white" alt="SOURCE CODE"/> 
     </a>
 </p>
 

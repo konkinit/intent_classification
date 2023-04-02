@@ -33,8 +33,7 @@ class Pipeline:
         self.confusion_matrix = array([])
 
     def summarize(self) -> None:
-        """
-        Execute the encode-decode strategy on a dataset
+        """Execute the encode-decode strategy on a dataset
         and Summarize the report in a dataframe
         """
         format_obj = Format(self.dataset_name,

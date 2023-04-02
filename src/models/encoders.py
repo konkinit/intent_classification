@@ -41,6 +41,17 @@ class TransformersEncoder:
                 list_inputs: Union[List[str],
                                    List[List[str]],
                                    List[tf.Tensor]]) -> tf.Tensor:
+        """Return the embeddings from the initialized transform
+
+        Args:
+            list_inputs (
+                Union[List[str],
+                      List[List[str]],
+                      List[tf.Tensor]]): Texts inputs
+
+        Returns:
+            tf.Tensor: embeddings
+        """
         def _embedding(item_inputs:  Union[str, List[str]]):
             if type(item_inputs) in (str, list):
                 encoded_input = self.tokenizer(

@@ -3,8 +3,10 @@
     <br/>
 </h1>
 
-<p align="center">The project consists of building an intent classifier which purpose is to pedict the sequence of labels 
-in a dialogue <br/> </p>
+<p align="center">
+    The project consists of building an intent classifier which purpose is to pedict the sequence of labels  in a dialogue 
+    <br/> 
+</p>
 
 <p align="center">
     <img alt="Test & Lint" src="https://img.shields.io/github/actions/workflow/status/konkinit/intent_classification/test_lint.yaml?label=Lint%20and%20TEST&style=for-the-badge">
@@ -15,13 +17,14 @@ in a dialogue <br/> </p>
 target="_blank"><img src="https://img.shields.io/badge/python-3.10-blue.svg?style=for-the-badge" alt="Python Version" /></a>
 </p>
 
-Source code of the paper [Intents Classification for Neural Text Generation](https://fr.overleaf.com/read/ryrvbgysmnck)
+<p align="center">
+    <img src="https://img.shields.io/endpoint?color=green&label=SOURCE%20CODE&logo=overleaf&logoColor=green&style=for-the-badge&url=https%3A%2F%2Ffr.overleaf.com%2F6151584112drdsyxchsryy&message=avalaible">
+</p>
+
 
 Abstract :
 
-*The hype around OpenAI's ChatGPT has more than ever sparked interest in AI-based bots where labeling and classification of utterances are a centerpiece in order to improve user experience. Broadly, Dialogue Acts (DA) and Emotion/Sentiment (E/S) tasks are identified through sequence labeling systems that are trained in a supervised manner. In this work, we propose four encoder-decoder models 
-to learn generic representations adapted to the spoken dialog, which we evaluate on six datasets of different sizes of the Sequence labellIng
-Evaluation benChmark fOr spoken laNguagE benchmark (SILICONE) benchmark. Designed models are represented with either a hierarchical encoder or non-hierarchical encoders both based on pre-trained transformers (BERT/XLNet). We notice the failure of the models to learn some datasets due to their inherent properties but in general, the BERT-GRU architecture is the best model regarding accuracy.*
+>*The hype around OpenAI's ChatGPT has more than ever sparked interest in AI-based bots where labeling and classification of utterances are a centerpiece in order to improve user experience. Broadly, Dialogue Acts (DA) and Emotion/Sentiment (E/S) tasks are identified through sequence labeling systems that are trained in a supervised manner. In this work, we propose four encoder-decoder models to learn generic representations adapted to the spoken dialog, which we evaluate on six datasets of different sizes of the Sequence labellIng Evaluation benChmark fOr spoken laNguagE benchmark (SILICONE) benchmark. Designed models are represented with either a hierarchical encoder or non-hierarchical encoders both based on pre-trained transformers (BERT/XLNet). We notice the failure of the models to learn some datasets due to their inherent properties but in general, the BERT-GRU architecture is the best model regarding accuracy.*
 
 ## Getting Started
 
@@ -36,7 +39,8 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt --user
 ```
 
-3. Run the script `./src/utils/get_datasets.py` to download the part of experiment datasets of [SILICONE](https://huggingface.co/datasets/silicone)
+3. Run the script `./src/utils/get_datasets.py` until all the experiment datasets of [SILICONE](https://huggingface.co/datasets/silicone)
+   are downloaded
 
 4. Run the notebook `./notebooks/experimental_results.ipynb`
 
@@ -47,7 +51,7 @@ We design 4 models based on the below encoder-decoder architecture where $\mathc
 respectively an encoder and a decoder. Typically an encoder is a transformer in our case a BERT or XLNet model 
 and a decoder a neural network which can be a plain MLP or a GRU.
 
-![archi_plot](./figs/archi.png)
+![archi_plot](./data/figs/archi.png)
 
 
 ## Experimental results

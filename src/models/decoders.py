@@ -25,7 +25,7 @@ class Decoder:
              embeddings: List[tf.Tensor],
              labels: List[tf.Tensor]) -> NotImplemented:
         """
-        Fit the MPL-based decoder
+        Fit the decoder
         """
         self._build()
         self.model.fit(embeddings[0],

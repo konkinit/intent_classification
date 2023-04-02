@@ -30,7 +30,7 @@ def get_file_path(ds_ame: str, split: str) -> str:
     Returns:
         str: absolute path of the dataset
     """
-    return f"./inputs_data/data_{ds_ame}_{split}.csv"
+    return f"./data/inputs_data/data_{ds_ame}_{split}.csv"
 
 
 def context_min_nUtterances_split_level(df: DataFrame, T: int) -> DataFrame:

@@ -21,11 +21,11 @@
 </p>
 
 <p align="center">
-    <a href="https://fr.overleaf.com/6151584112drdsyxchsryy" target="_blank">
+    <a href="https://fr.overleaf.com/6151584112drdsyxchsryy">
         <img src="https://img.shields.io/badge/Overleaf-47A141?style=for-the-badge&logo=Overleaf&logoColor=white" alt="SOURCE CODE"/> 
     </a>
 </p>
-
+s
 
 Abstract :
 
@@ -56,7 +56,8 @@ We design 4 models based on the below encoder-decoder architecture where $\mathc
 respectively an encoder and a decoder. Typically an encoder is a transformer in our case a BERT or XLNet model 
 and a decoder a neural network which can be a plain MLP or a GRU.
 
-![archi_plot](./data/figs/archi.png)
+
+<img src="./data/figs/archi.png" alt="archi_plot" width="75%" height="75%">
 
 
 ## Experimental results

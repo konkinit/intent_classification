@@ -4,7 +4,7 @@ import pytest
 import tensorflow as tf
 if os.getcwd() not in sys.path:
     sys.path.append(os.getcwd())
-from src.models.encoders import TransformersEncoder
+from src.models import TransformersEncoder
 
 
 @pytest.mark.parametrize(

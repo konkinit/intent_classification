@@ -41,7 +41,7 @@ git clone https://github.com/konkinit/intent_classification.git
 2. Upgrade `pip` and install the dependencies
 ```bash
 python -m pip install --upgrade pip
-pip install -r requirements.txt --user
+pip install -r requirements.txt
 ```
 
 3. Run the script `./src/utils/get_datasets.py` until all the experiment datasets of [SILICONE](https://huggingface.co/datasets/silicone)
